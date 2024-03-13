@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+}
+.parsley-errors-list {
+  padding: 0 !important;
+}
+
+.parsley-errors-list li {
+  list-style-type: none;
+  color: red;
+}

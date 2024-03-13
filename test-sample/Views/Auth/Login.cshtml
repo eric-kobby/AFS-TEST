@@ -1,0 +1,23 @@
+@{
+  ViewData["Title"] = "Login Page";
+}
+
+<div class="container mt-5">
+  <form method="post" class="login-box d-flex flex-column gap-2" id="login-form">
+    <input name="email" placeholder="Email. e.g. jdoe@@example.com" autocomplete="username" type="email"
+      class="form-control" id="email" required />
+    <input name="password" placeholder="Password" autocomplete="current-password" class="form-control" type="password"
+      id="password" />
+    <button id="login-button" class="btn btn-primary">
+      Login&nbsp;
+      <partial name="_SpinnerPartial" />
+    </button>
+    <div class="text-right">
+      <span>New here ? </span>
+      <a href="/Auth/Register">Register</a>
+    </div>
+  </form>
+</div>
+@section Scripts {
+  <script src="~/js/login.js" asp-append-version="true"></script>
+}

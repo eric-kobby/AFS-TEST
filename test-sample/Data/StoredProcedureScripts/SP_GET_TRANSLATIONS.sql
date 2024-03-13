@@ -1,0 +1,45 @@
+CREATE     PROCEDURE [dbo].[GET_TRANSLATIONS]
+@SearchText AS NVARCHAR(50)='',
+@SortColumn AS NVARCHAR(50)='',
+@SortDirection AS NVARCHAR(50)='',
+@StartIndex AS INT=1,
+@PageSize AS INT=10
+AS
+BEGIN
+	DECLARE @QUERY AS NVARCHAR(MAX)='',@ORDER_QUERY AS NVARCHAR(MAX)='',@CONDITIONS AS NVARCHAR(MAX)='',
+	@PAGINATION AS NVARCHAR(MAX)=''
+	SET @QUERY='SELECT * FROM Translations '
+
+	-- SEARCH OPERATION
+	IF(ISNULL(@SearchText,'')<>'')
+	BEGIN
+		SET @CONDITIONS='
+			WHERE
+			Text LIKE ''%'+@SearchText+'%''
+			OR Translated LIKE ''%'+@SearchText+'%''
+			OR Translator LIKE ''%'+@SearchText+'%''
+		'
+	END
+
+	-- SORT OPERATION
+	IF(ISNULL(@SortColumn,'')<>'' AND ISNULL(@SortDirection,'')<>'')
+	BEGIN
+		SET @ORDER_QUERY=' ORDER BY '+@SortColumn+' '+@SortDirection
+	END
+	ELSE SET @ORDER_QUERY=' ORDER BY Id ASC'
+
+	-- PAGINATION OPERATION
+	IF(@PageSize>0)
+	BEGIN
+		SET @PAGINATION=' OFFSET '+(CAST(@StartIndex AS NVARCHAR(10)))+' ROWS
+		FETCH NEXT '+(CAST(@PageSize AS NVARCHAR(10)))+' ROWS ONLY'
+	END
+
+	IF(@CONDITIONS<>'') SET @QUERY+=@CONDITIONS
+	IF(@ORDER_QUERY<>'') SET @QUERY+=@ORDER_QUERY
+	IF(@PAGINATION<>'') SET @QUERY+=@PAGINATION
+
+	PRINT(@QUERY)
+	EXEC(@QUERY)
+END
+GO

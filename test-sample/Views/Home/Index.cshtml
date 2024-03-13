@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Translate";
+}
+
+<div class="d-flex justify-content-center p-4">
+    <form method="post" action="#" id="translation-form" class="w-50 d-flex flex-column gap-2">
+        <textarea id="translation-text" class="form-control" rows="5" cols="3" required name="text"
+            placeholder="Enter or paste text to be translated"></textarea>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-success" id="translate-button">
+                Translate &nbsp;
+                <partial name="_SpinnerPartial" />
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/translate.js" asp-append-version="true"></script>
+}
